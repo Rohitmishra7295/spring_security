@@ -1,0 +1,61 @@
+🎯 What is Google OAuth 2.0 Playground?
+Google OAuth Playground is an online tool by Google where you can test how OAuth 2.0 works — step-by-step — without writing any code.
+
+✅ It helps developers to:
+
+See how OAuth Authorization Code Flow works
+
+Get Access Tokens and Refresh Tokens
+
+Make API requests using those tokens manually
+
+👉 Think of it like a practice area where you can safely try and understand OAuth.
+
+🚀 What can you do with OAuth Playground?
+Pick Google APIs you want to work with (like Gmail, Google Drive, Calendar, etc.)
+
+Login and get an Authorization Code
+
+Exchange the code for an Access Token
+
+Use the token to call Google APIs (like list your Gmail labels or Google Drive files)
+
+Refresh expired tokens
+
+Learn how real OAuth2 apps talk to Google services
+
+🛠️ How to Use Google OAuth Playground (Step-by-Step):
+Visit:
+👉 https://developers.google.com/oauthplayground
+
+Choose the Google APIs you want to test:
+(Example: Gmail API → https://mail.google.com/)
+
+Click "Authorize APIs".
+
+Google will ask you to log in and allow permissions.
+
+After you allow, Google gives you an Authorization Code automatically.
+
+Click "Exchange authorization code for tokens" to get:
+
+Access Token (to access APIs)
+
+Refresh Token (to get new Access Tokens later)
+
+Now you can use the Access Token to make real API calls right inside the Playground.
+
+✨ Bonus Tip:
+You can also use your own Client ID and Client Secret instead of using Google's defaults.
+
+This is very useful if you're testing your own app's OAuth setup.
+
+📚 Why use OAuth Playground?
+You can test without building a full app.
+
+You can see how tokens are generated and used.
+
+You can practice working with Google APIs.
+
+You can debug OAuth errors easily.
+
