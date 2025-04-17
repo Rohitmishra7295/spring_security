@@ -1,0 +1,41 @@
+***********Authentication
+
+What: Verifying who a user or system is.
+
+Example: Login with username and password.
+
+**********Authorization
+
+What: Verifying what a user is allowed to do.
+
+Example: Admin can delete users, normal users cannot.
+
+***********Confidentiality
+
+What: Protecting information from being accessed by unauthorized people.
+
+How: Encryption (e.g., HTTPS, SSL/TLS).
+
+**********Integrity
+
+What: Ensuring information isn't tampered with during transfer or storage.
+
+How: Hashing (e.g., SHA-256) or Digital Signatures.
+
+************Signatures (Digital Signatures)
+
+What: Verifying that a message or document came from a known sender and was not altered.
+
+How: Encrypting hash of data with sender's private key; receiver verifies using sender’s public key.
+
+***********CORS (Cross-Origin Resource Sharing)
+
+What: Browser security feature — controls which domains can access your server’s resources.
+
+Example: A React frontend on domainA.com tries to call a backend API on domainB.com. Without proper CORS setup, the browser will block it.
+
+***********CSRF (Cross-Site Request Forgery)
+
+What: An attack where a malicious site tricks a user's browser into making unwanted requests to a different site where the user is authenticated.
+
+How to Protect: Use CSRF tokens, SameSite cookies, or double-submit cookies.
