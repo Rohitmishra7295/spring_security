@@ -1,0 +1,65 @@
+What is BCrypt?
+BCrypt is a password hashing function.
+
+It's used to securely store passwords — not reversible, unlike encryption.
+
+It includes an internal salt and work factor (strength).
+
+Used in Spring Security by default.
+
+✅ Why use BCrypt?
+✅ Adds random salt internally → protects against rainbow table attacks.
+
+✅ You can’t decrypt it — only verify with .matches().
+
+✅ Automatically slows down hashing with a configurable work factor (default: 10).
+
+✅ Widely trusted in the industry.
+
+
+********************************************************
+********************************************************
+********************************************************
+
+🔧 Example: Encrypt + Match using BCryptPasswordEncoder
+
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+public class BCryptExample {
+    public static void main(String[] args) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        String rawPassword = "mySecret123";
+        String hashedPassword = encoder.encode(rawPassword);
+
+        System.out.println("Hashed Password: " + hashedPassword);
+
+        boolean isMatch = encoder.matches("mySecret123", hashedPassword);
+        System.out.println("Password Match: " + isMatch); // true
+    }
+}
+
+
+
+
+********************************************************
+********************************************************
+********************************************************
+🤖 In Spring Boot (as a Bean):
+
+
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration
+public class AppConfig {
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+
