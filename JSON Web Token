@@ -1,0 +1,64 @@
+📚 JWT (JSON Web Token) - Simple Guide
+🎯 What is JWT?
+JWT (JSON Web Token) is a small and secure way to send information between two places — like between your backend and frontend.
+
+👉 Mostly used for:
+
+Login Authentication (after login, server gives you a token)
+
+Authorization (deciding what user is allowed to do)
+
+Instead of sending username/password every time, you send a JWT token.
+
+📦 What Does a JWT Look Like?
+A JWT looks like a long string divided into three parts by dots (.):
+
+Copy
+Edit
+xxxxx.yyyyy.zzzzz
+It has 3 parts:
+
+
+Part	Meaning
+Header	Type of token + how it is signed (like HS256)
+Payload	Data inside the token (like user ID, email, roles)
+Signature	To check that nobody changed the token
+🔥 Example of a Real JWT
+nginx
+Copy
+Edit
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+.
+eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ
+.
+SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+🛠️ How JWT Works (Easy Steps)
+User logs in with username and password.
+
+Server checks login, and if correct, it creates a JWT token with user info.
+
+Server sends the token back to the user.
+
+User saves the token (in localStorage/sessionStorage).
+
+User sends the token with every request (usually in the Authorization header).
+
+Server reads and verifies the token and allows or blocks the request.
+
+🧠 Why JWT is Useful?
+✅ Stateless → Server does not have to store sessions.
+✅ Secure → Signed, so it cannot be easily changed.
+✅ Portable → Works across different servers and devices.
+✅ Compact → Small, fits easily in URLs, headers, or requests.
+
+🛡️ JWT in Authorization
+When making API requests, send the token like this:
+
+makefile
+Copy
+Edit
+Authorization: Bearer <your-jwt-token>
+If token is valid → Access is granted ✅
+
+If token is invalid/expired → Access is denied ❌
+
