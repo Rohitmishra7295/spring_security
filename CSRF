@@ -1,0 +1,91 @@
+ What is CSRF?
+
+CSRF = Cross-Site Request Forgery
+It’s a web security vulnerability where an attacker tricks a logged-in user into unknowingly performing actions (like transferring money, changing email, etc.)
+
+🛡️ Spring Security protects against CSRF by default for stateful apps (like session-based login forms).
+
+
+
+🎯 How CSRF Protection Works in Spring:
+
+Step	What Happens
+1	Spring Security generates a CSRF token automatically when the user logs in.
+2	Frontend must send the CSRF token with every unsafe request (POST/PUT/DELETE).
+3	If token is missing or wrong → request is rejected with 403 Forbidden.
+
+************************************************************
+************************************************************
+
+⚙️ SIMPLE CODE Example
+
+1. Basic SecurityConfig.java
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+            .csrf() // 🔥 CSRF enabled by default
+            .and()
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().authenticated()
+            )
+            .formLogin() // 🔥 Form based login
+            .and()
+            .build();
+    }
+}
+
+
+************************************************************
+************************************************************
+
+🛑 When you might want to Disable CSRF?
+
+http.csrf().disable()
+
+************************************************************
+************************************************************
+
+| How to disable CSRF for some URLs 
+If You want to disable CSRF for specific endpoints (✅ but not for the entire app).
+
+🎯 Here's how you do it:
+Use .csrfTokenRequestHandler() OR .ignoringRequestMatchers() in your SecurityFilterChain config.
+
+
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import jakarta.servlet.http.HttpServletRequest;
+
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+    RequestMatcher csrfRequestMatcher = new RequestMatcher() {
+        @Override
+        public boolean matches(HttpServletRequest request) {
+            // Disable CSRF for /api/public/** and /api/nocsrf/**
+            String path = request.getRequestURI();
+            return !(path.startsWith("/api/public/") || path.startsWith("/api/nocsrf/"));
+        }
+    };
+
+    return http
+        .csrf(csrf -> csrf
+            .requireCsrfProtectionMatcher(csrfRequestMatcher)
+        )
+        .authorizeHttpRequests(auth -> auth
+            .anyRequest().authenticated()
+        )
+        .formLogin()
+        .and()
+        .build();
+}
+
+
