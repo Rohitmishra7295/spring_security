@@ -1,0 +1,100 @@
+# # # Creating a custom filter gives you full control over what happens before/after authentication, like:
+
+logging,
+
+IP blocking,
+
+token checking,
+
+custom headers,
+
+anything you want!
+
+
+           *******What is a Custom Filter in Spring Security?************
+
+A filter is something that intercepts requests before they hit your controllers.
+You can:
+
+Modify the request
+
+Reject it
+
+Add extra logic
+
+Pass it along
+
+Spring Security uses a filter chain internally.
+
+
+
+
+
+
+********************************************************
+********************************************************
+********************************************************
+
+⚙️ Basic Structure of a Custom Filter
+
+
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+
+@Component
+public class MyCustomFilter extends OncePerRequestFilter {
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
+                                    throws ServletException, IOException {
+
+        // ✅ Your custom logic here
+        System.out.println("Inside custom filter: " + request.getRequestURI());
+
+        // Always continue the filter chain
+        filterChain.doFilter(request, response);
+    }
+}
+
+
+
+********************************************************
+********************************************************
+********************************************************
+
+
+🛡️ Example: Block Requests From a Specific IP
+
+
+@Component
+public class IpBlockFilter extends OncePerRequestFilter {
+
+    private static final String BLOCKED_IP = "192.168.1.100";
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
+                                    throws ServletException, IOException {
+
+        String clientIp = request.getRemoteAddr();
+
+        if (BLOCKED_IP.equals(clientIp)) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.getWriter().write("Your IP is blocked.");
+            return; // 🔥 Don't continue the chain
+        }
+
+        filterChain.doFilter(request, response); // continue normally
+    }
+}
+
