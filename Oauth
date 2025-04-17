@@ -1,0 +1,55 @@
+What is OAuth?
+
+OAuth (Open Authorization) is an authorization framework
+that allows a third-party application to access user resources from another service without exposing the user’s password.
+
+In simple words:
+✅ Access your data,
+✅ Without giving your password.
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+📱 Real-World Example:
+
+You click "Login with Google" on a random app.
+
+You don't type your Google password into that app.
+
+Instead, Google handles the login, and the app gets a token that says:
+
+"Yes, this user allowed you to access their email address."
+
+That's OAuth working behind the scenes!
+
+
+******************************❗ Important: ******************************************
+
+OAuth ≠ Authentication
+OAuth is about Authorization (permissions).
+If you need Authentication (prove identity), you use OIDC (OpenID Connect) on top of OAuth2.
+
+Tokens expire!
+That's why you might also need a Refresh Token to get new Access Tokens without asking the user to log in again.
+
+
+
+
+*********************************🚀 Quick Code Example: (Spring Boot OAuth2 Login) *************************************
+
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .oauth2Login() // enables OAuth2 login
+            .and()
+            .authorizeHttpRequests()
+            .anyRequest()
+            .authenticated();
+        return http.build();
+    }
+}
+
