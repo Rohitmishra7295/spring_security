@@ -1,0 +1,33 @@
+🔥 Real-World Scenario: You login to a banking app
+1. User enters credentials and clicks "Login"
+Authentication:
+The server checks your username and password → confirms your identity.
+
+2. Secure communication
+Confidentiality:
+Login details are sent over HTTPS (TLS encryption), so no one can read your password on the network (like hackers or ISPs).
+
+Integrity:
+TLS also ensures that what you send isn't tampered with while traveling to the server.
+
+3. Server validates login
+Signatures:
+If the server uses JWT tokens, it signs the token using a private key.
+➔ The token guarantees that nobody can forge or tamper with your session information.
+
+4. User gets a JWT token (or session cookie)
+Authorization:
+The token may say:
+"role": "user" or "role": "admin" — the server will check this when deciding if you're allowed to perform certain actions (like transfer money vs. just viewing balance).
+
+5. Frontend App makes API requests
+CORS:
+If your frontend (bankapp.com) tries to call the backend API (api.bankapp.com), the browser checks:
+➔ "Is the API allowing this domain?"
+If not configured properly (CORS headers), browser blocks the call to protect you.
+
+6. User submits a money transfer form
+CSRF Protection:
+Since your browser automatically attaches cookies (like session IDs) with every request, a malicious site could trick your browser into sending a fake money transfer.
+➔ To prevent that, the banking app requires a CSRF token with every sensitive action.
+(A CSRF token is like a secret key in the form that attackers can't guess.)
